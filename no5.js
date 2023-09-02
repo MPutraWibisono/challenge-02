@@ -1,16 +1,9 @@
 function getInfoPenjualan(dataPenjualan) {
   let a = dataPenjualan;
-  //deklarasi object baru
-  const info = {
-    totalKeuntungan: 0,
-    totalModal: 0,
-    presentaseKeuntungan: null,
-    produkBukuTerlaris: null,
-    penulisTerlaris: null,
-  };
-  let omset = 0; //deklarasi omset
+  let omset = 0;
+  let totalModal = 0;
   if (Array.isArray(a) && a.length > 0) {
-    let terlaris = a[0].totalTerjual; // inisialisasi terlaris
+    let terlaris = a[0].totalTerjual;
     //for loop per object
     for (let i = 0; i < a.length; i++) {
       if (typeof a[i] != "object") {
@@ -18,35 +11,38 @@ function getInfoPenjualan(dataPenjualan) {
       } else {
         //logika perhitungan
         omset += a[i].hargaJual * a[i].totalTerjual;
-        info.totalModal += a[i].hargaBeli * (a[i].totalTerjual + a[i].sisaStok);
+        totalModal += a[i].hargaBeli * (a[i].totalTerjual + a[i].sisaStok);
         if (a[i].totalTerjual > terlaris) {
           terlaris = a[i].totalTerjual;
-          info.produkBukuTerlaris = a[i].namaProduk;
-          info.penulisTerlaris = a[i].penulis;
+          globalThis.produkBukuTerlaris = a[i].namaProduk;
+          globalThis.penulisTerlaris = a[i].penulis;
         }
       }
     }
-    info.totalKeuntungan = omset - info.totalModal;
+    globalThis.totalKeuntungan = omset - totalModal;
+    globalThis.presentaseKeuntungan =
+      parseInt((totalKeuntungan / omset) * 100) + "%";
     //format Rupiah
-    info.presentaseKeuntungan =
-      parseInt((info.totalKeuntungan / omset) * 100) + "%";
-    info.totalKeuntungan = new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(info.totalKeuntungan);
-    info.totalModal = new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(info.totalModal);
+    function formatRupiah(uang) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(uang);
+    }
+    totalKeuntungan = formatRupiah(totalKeuntungan);
+    totalModal = formatRupiah(totalModal);
   } else {
     return "Error: Invalid data, the element should be an array object more than 1 number.";
   }
   return [
-    `Omset : ${new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(omset)}`,
-    info,
+    `Omset : ${formatRupiah(omset)}`,
+    {
+      totalKeuntungan,
+      totalModal,
+      presentaseKeuntungan,
+      produkBukuTerlaris,
+      penulisTerlaris,
+    },
   ];
 }
 

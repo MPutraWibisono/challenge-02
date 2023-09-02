@@ -12,4 +12,4 @@ const checkTypeNumber = (givenNumber) => {
   }
 };
 
-console.log(checkTypeNumber());
+console.log(checkTypeNumber(9));
