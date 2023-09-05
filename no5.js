@@ -71,9 +71,9 @@ const dataPenjualanNovel = [
     namaProduk: "Selamat Tinggal",
     penulis: "Tere Liye",
     hargaBeli: 75000,
-    hargaJual: 183000,
+    hargaJual: 103000,
     totalTerjual: 171,
-    sisaStok: 28,
+    sisaStok: 20,
   },
   {
     idProduct: "BOOK002941",
@@ -90,7 +90,7 @@ const dataPenjualanNovel = [
     penulis: "Andrea Hirata",
     hargaBeli: 55000,
     hargaJual: 68000,
-    totalTerjual: 28,
+    totalTerjual: 20,
     sisaStok: 56,
   },
 ];
