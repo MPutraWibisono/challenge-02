@@ -2,6 +2,8 @@ function getInfoPenjualan(dataPenjualan) {
   let a = dataPenjualan;
   let omset = 0;
   let totalModal = 0;
+  let penulisBuku = [];
+  let bukuTerjualPenulis = [];
   if (Array.isArray(a) && a.length > 0) {
     let terlaris = a[0].totalTerjual;
     //for loop per object
@@ -10,15 +12,23 @@ function getInfoPenjualan(dataPenjualan) {
         return "Array element data type must be an object";
       } else {
         //logika perhitungan
+        if (penulisBuku.includes(a[i].penulis)) {
+          let index = penulisBuku.indexOf(a[i].penulis);
+          bukuTerjualPenulis[index] += a[i].totalTerjual;
+        } else {
+          penulisBuku.push(a[i].penulis);
+          bukuTerjualPenulis.push(a[i].totalTerjual);
+        }
         omset += a[i].hargaJual * a[i].totalTerjual;
         totalModal += a[i].hargaBeli * (a[i].totalTerjual + a[i].sisaStok);
         if (a[i].totalTerjual > terlaris) {
           terlaris = a[i].totalTerjual;
           globalThis.produkBukuTerlaris = a[i].namaProduk;
-          globalThis.penulisTerlaris = a[i].penulis;
         }
       }
     }
+    globalThis.penulisTerlaris =
+      penulisBuku[bukuTerjualPenulis.indexOf(Math.max(...bukuTerjualPenulis))];
     globalThis.totalKeuntungan = omset - totalModal;
     globalThis.presentaseKeuntungan =
       parseInt((totalKeuntungan / omset) * 100) + "%";
