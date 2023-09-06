@@ -31,7 +31,7 @@ function getInfoPenjualan(dataPenjualan) {
       penulisBuku[bukuTerjualPenulis.indexOf(Math.max(...bukuTerjualPenulis))];
     globalThis.totalKeuntungan = omset - totalModal;
     globalThis.presentaseKeuntungan =
-      parseInt((totalKeuntungan / omset) * 100) + "%";
+      Math.round((totalKeuntungan / totalModal) * 100) + "%";
     //format Rupiah
     function formatRupiah(uang) {
       return new Intl.NumberFormat("id-ID", {
