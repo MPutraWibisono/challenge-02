@@ -44,16 +44,13 @@ function getInfoPenjualan(dataPenjualan) {
   } else {
     return "Error: Invalid data, the element should be an array object more than 1 number.";
   }
-  return [
-    `Omset : ${formatRupiah(omset)}`,
-    {
-      totalKeuntungan,
-      totalModal,
-      presentaseKeuntungan,
-      produkBukuTerlaris,
-      penulisTerlaris,
-    },
-  ];
+  return {
+    totalKeuntungan,
+    totalModal,
+    presentaseKeuntungan,
+    produkBukuTerlaris,
+    penulisTerlaris,
+  };
 }
 
 const dataPenjualanNovel = [
